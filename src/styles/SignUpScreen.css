@@ -1,0 +1,110 @@
+.signup-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(to bottom, #FFA500, #000000);
+  }
+  
+  .signup-logo {
+    margin-right: 50px;
+  }
+  
+  .signup-logo img {
+    width: 400px;
+  }
+  
+  .signup-form {
+    background: white;
+    padding: 25px 30px;
+    border-radius: 12px;
+    text-align: center;
+    width: 340px;
+  }
+  
+  .signup-form h2 {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #000;
+  }
+  
+  .signup-input-container {
+    position: relative;
+    width: 85%;
+    margin: 8px 0;
+  }
+  
+  .signup-input {
+    width: 100%;
+    padding: 12px 40px 12px 12px;
+    border: 1px solid #000;
+    border-radius: 25px;
+    font-size: 14px;
+  }
+  
+  .signup-password-toggle-icon {
+    position: absolute;
+    right: -30px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #888;
+    font-size: 16px;
+  }
+  
+  .signup-button {
+    background-color: #000;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 25px;
+    text-align: center;
+    margin: 10px auto;
+    width: 55%;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    display: block;
+  }
+  
+  .signup-google-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    padding: 8px;
+    border-radius: 25px;
+    border: 1px solid #000;
+    width: 50%;
+    margin: 10px auto;
+    cursor: pointer;
+  }
+  
+  .signup-google-button img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+  }
+  
+  .signup-google-button-text {
+    color: #000;
+    font-size: 14px;
+  }
+  
+  .signup-form p {
+    margin-top: 15px;
+    font-size: 12px;
+    color: #333;
+  }
+  
+  .signup-form p .login-link {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .signup-form p .login-link:hover {
+    text-decoration: underline;
+  }
+  

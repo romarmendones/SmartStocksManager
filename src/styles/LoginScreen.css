@@ -1,0 +1,167 @@
+    .login-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        background: linear-gradient(to bottom, #FFA500, #000000);
+    }
+    
+    .logo {
+        margin-right: 50px;
+    }
+    
+    .logo img {
+        width: 400px;
+    }
+    
+    .login-form {
+        background: white;
+        padding: 25px 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        width: 340px;
+    }
+    
+    .login-form h2 {
+        font-size: 32px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #000;
+    }
+    
+    .input-container {
+        position: relative;
+        width: 85%;
+        margin: 8px 0;
+    }
+    
+    .input {
+        width: 100%;
+        padding: 12px 40px 12px 12px;
+        border: 1px solid #000;
+        border-radius: 25px;
+        font-size: 14px;
+    }
+    
+    .password-toggle-icon {
+        position: absolute;
+        right: -30px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: #888;
+        font-size: 16px;
+    }
+    
+    .remember-me input[type="checkbox"] {
+        display: none;
+    }
+
+    .remember-me label {
+        position: relative;
+        padding-left: 30px;
+        cursor: pointer;
+        font-size: 13px;
+        color: #333;
+    }
+    
+    .remember-me label:before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 18px;    
+        height: 18px;
+        border-radius: 4px;
+        background-color: #ddd;
+        border: 1px solid #ddd;
+        box-sizing: border-box;
+    }
+    
+    .remember-me label:after {
+        content: "";
+        position: absolute;
+        left: 6px;
+        top: 2px;
+        width: 5px;
+        height: 10px;
+        border: solid transparent;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+        opacity: 0;
+        transition: opacity 0.2s ease;
+    }
+    
+    .remember-me input[type="checkbox"]:checked + label:before {
+        background-color: #000;
+        border-color: #000;
+    }
+    
+    .remember-me input[type="checkbox"]:checked + label:after {
+        border-color: #fff;
+        opacity: 1;
+    }
+    
+    .login-form .forgot-password {
+        font-size: 12px;
+        color: #333;
+        margin-top: 5px;
+        cursor: pointer;
+    }
+    
+    .login-button {
+        background-color: #000;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 25px;
+        text-align: center;
+        margin: 10px auto;
+        width: 55%;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        border: none;
+        display: block;
+    }
+    
+    .google-login {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #fff;
+        padding: 8px;
+        border-radius: 25px;
+        border: 1px solid #000;
+        width: 50%;
+        margin: 10px auto;
+        cursor: pointer;
+    }
+    
+    .google-login img {
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+    }
+    
+    .google-login-text {
+        color: #000;
+        font-size: 14px;
+    }
+    
+    .login-form p {
+        margin-top: 15px;
+        font-size: 12px;
+        color: #333;
+    }
+    
+    .login-form p a {
+        color: #007bff;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    
+    .login-form p a:hover {
+        text-decoration: underline;
+    }
+    

@@ -1,0 +1,68 @@
+.success-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(to bottom, #FFA500, #000000);
+  }
+  
+  .success-logo {
+    margin-right: 50px;
+  }
+  
+  .success-logo img {
+    width: 400px;
+    filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.5));
+  }
+  
+  .success-form {
+    background: white;
+    padding: 25px 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 340px;
+  }
+  
+  .checkmark {
+    width: 150px;
+    height: 200px;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .checkmark img {
+    width: 180px;
+    height: 180px;
+  }
+  
+  .success-form h2 {
+    font-size: 32px;
+    font-weight: bold;
+    color: #000;
+    text-shadow: 0px 3px 3px #888;
+    margin-bottom: 10px;
+  }
+  
+  .success-form p {
+    font-size: 14px;
+    color: #666;
+    margin: 10px 0;
+  }
+  
+  .continue-button {
+    background-color: #000;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    width: 55%;
+    margin-top: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  
