@@ -13,7 +13,6 @@ const EditProduct = ({ productId, onClose }) => {
   });
   const [selectedImage, setSelectedImage] = useState(null);
 
-  // Fetch product data from Supabase
   useEffect(() => {
     if (productId) {
       const fetchProductData = async () => {
@@ -36,7 +35,6 @@ const EditProduct = ({ productId, onClose }) => {
     }
   }, [productId]); // Ensure the effect runs when productId changes
 
-  // Handle input field changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setProductData({
@@ -45,7 +43,6 @@ const EditProduct = ({ productId, onClose }) => {
     });
   };
 
-  // Handle image change
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -57,7 +54,6 @@ const EditProduct = ({ productId, onClose }) => {
     }
   };
 
-  // Handle save product
   const handleSaveProduct = async () => {
     const { code, product, type, price, stock } = productData;
     if (productId && code && product && type && price && stock !== undefined) {
@@ -69,7 +65,7 @@ const EditProduct = ({ productId, onClose }) => {
           type: productData.type,
           price: productData.price,
           stock: productData.stock,
-          image: selectedImage, // Assuming image is saved as a base64 string
+          image: selectedImage,
         })
         .eq('id', productId);
 
@@ -77,14 +73,13 @@ const EditProduct = ({ productId, onClose }) => {
         console.error('Error saving product:', error.message);
       } else {
         console.log('Product updated successfully');
-        onClose(); // Close the modal after saving
+        onClose();
       }
     } else {
       console.log('Please fill out all fields');
     }
   };
 
-  // Display loading while data is being fetched
   if (!productData.code) {
     return <div>Loading...</div>;
   }
@@ -94,7 +89,6 @@ const EditProduct = ({ productId, onClose }) => {
       <div className="edit-product-content">
         <h2>Edit Product</h2>
         <div className="edit-product-form">
-          {/* Image Section */}
           <div className="edit-product-image-section">
             {selectedImage ? (
               <img src={selectedImage} alt="Product" className="edit-product-image" />
@@ -110,7 +104,6 @@ const EditProduct = ({ productId, onClose }) => {
             <p className="image-guideline">Recommended image size: 150x150px</p>
           </div>
 
-          {/* Form Section */}
           <div className="edit-product-form-section">
             <div className="form-group">
               <label htmlFor="code">Product Code</label>

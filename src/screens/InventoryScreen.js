@@ -9,14 +9,12 @@ const InventoryScreen = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterBy, setFilterBy] = useState("");
   const [isOverlayVisible, setIsOverlayVisible] = useState(false);
-  const [isPosOverlayVisible, setIsPosOverlayVisible] = useState(false); // POS modal state
+  const [isPosOverlayVisible, setIsPosOverlayVisible] = useState(false);
   const [isEditOverlayVisible, setIsEditOverlayVisible] = useState(false);
   const [selectedProductData, setSelectedProductData] = useState(null);
   const [inventory, setInventory] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
-  // POS system state
   const [saleProducts, setSaleProducts] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
   const [receiptNumber, setReceiptNumber] = useState(null);
@@ -35,12 +33,10 @@ const InventoryScreen = () => {
     }
   };
 
-  
   useEffect(() => {
     fetchInventory();
   }, []);
 
-  // Handle adding product to POS sale
   const handleAddToSale = async (productId, quantity) => {
     try {
       const { data: selectedProduct, error } = await supabase
@@ -82,33 +78,29 @@ const InventoryScreen = () => {
     }
   };
 
-  // Update handleCompleteSale function in InventoryScreen.js
   const handleCompleteSale = async () => {
     if (saleProducts.length === 0) {
       alert("Please add products to the sale");
       return;
     }
-  
+
     const receiptNum = `R-${Date.now().toString().slice(-6)}`;
     setReceiptNumber(receiptNum);
-  
+
     try {
       for (const product of saleProducts) {
         const updatedStock = product.stock - product.quantity;
-  
-        // Validate stock
+
         if (updatedStock < 0) {
           alert(`Insufficient stock for product: ${product.product}`);
           return;
         }
-  
-        // Update inventory stock
+
         await supabase
           .from("inventory")
           .update({ stock: updatedStock })
           .eq("id", product.id);
-  
-        // Add notifications for low stock or out of stock
+
         if (updatedStock === 0) {
           await supabase.from("notifications").insert({
             type: "alert",
@@ -121,39 +113,31 @@ const InventoryScreen = () => {
           });
         }
       }
-  
-      // Log the sale
+
       const { error: salesError } = await supabase.from("sales").insert({
         price: totalAmount,
         created_at: new Date().toISOString(),
         product: saleProducts.map((p) => p.product).join(", "),
         quantity: saleProducts.reduce((total, p) => total + p.quantity, 0),
       });
-  
+
       if (salesError) throw salesError;
-  
-      // Add notification for new sale
+
       await supabase.from("notifications").insert({
         type: "sales",
         message: `New Sale: Total revenue ₱${totalAmount.toFixed(2)}.`,
       });
 
-    
-  
-      // Reset POS system
       setSaleProducts([]);
       setTotalAmount(0);
       alert("Sale completed successfully!");
-      fetchInventory(); // Refresh inventory data
+      fetchInventory();
     } catch (error) {
       console.error("Error completing sale:", error.message);
       alert("Failed to complete sale.");
     }
   };
-  
-  
-  
-  
+
   const filteredData = inventory.filter((item) => {
     const lowerSearchTerm = searchTerm.toLowerCase();
     if (!searchTerm && !filterBy) return true;
@@ -222,14 +206,13 @@ const InventoryScreen = () => {
             </button>
             <button
               className="pos-button"
-              onClick={() => setIsPosOverlayVisible(true)} // Open POS modal
+              onClick={() => setIsPosOverlayVisible(true)}
             >
               POS System
             </button>
           </div>
         </div>
 
-        {/* POS System */}
         {isPosOverlayVisible && (
           <div className="pos-overlay">
             <div className="pos-content">
@@ -249,7 +232,7 @@ const InventoryScreen = () => {
                       alert("Failed to fetch product");
                       return;
                     }
-                    const quantity = 1; // Default quantity
+                    const quantity = 1;
                     handleAddToSale(product.id, quantity);
                   }}
                 >
@@ -303,29 +286,29 @@ const InventoryScreen = () => {
                 </tr>
               </thead>
               <tbody>
-              {filteredData.map((item, index) => (
-    <tr key={index}>
-      <td>{item.code}</td>
-      <td>{item.product}</td>
-      <td>{item.type}</td>
-      <td>₱{Number(item.price || 0).toFixed(2)}</td> {/* Ensure price is a number */}
-      <td>{item.stock}</td>
-      <td>
-        <button
-          className="action-button edit"
-          onClick={() => openEditOverlay(item)} // Opens the edit overlay
-        >
-          ✏️
-        </button>
-        <button
-          className="action-button delete"
-          onClick={() => handleDelete(item.id)}
-        >
-          🗑️
-        </button>
-      </td>
-    </tr>
-  ))}
+                {filteredData.map((item, index) => (
+                  <tr key={index}>
+                    <td>{item.code}</td>
+                    <td>{item.product}</td>
+                    <td>{item.type}</td>
+                    <td>₱{Number(item.price || 0).toFixed(2)}</td>
+                    <td>{item.stock}</td>
+                    <td>
+                      <button
+                        className="action-button edit"
+                        onClick={() => openEditOverlay(item)}
+                      >
+                        ✏️
+                      </button>
+                      <button
+                        className="action-button delete"
+                        onClick={() => handleDelete(item.id)}
+                      >
+                        🗑️
+                      </button>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

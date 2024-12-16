@@ -22,17 +22,14 @@ const AddProductOverlay = ({ onClose, onAdd, isEditMode, selectedProductData }) 
   }, [isEditMode, selectedProductData]);
 
   const handleSaveProduct = async () => {
-    // Reset messages
     setErrorMessage("");
     setSuccessMessage("");
 
-    // Validate input fields
     if (!code || !product || !type || !price || !stock) {
       setErrorMessage("Please fill in all fields.");
       return;
     }
 
-    // Parse price and stock to proper types
     const parsedPrice = parseFloat(price);
     const parsedStock = parseInt(stock, 10);
 
@@ -42,7 +39,6 @@ const AddProductOverlay = ({ onClose, onAdd, isEditMode, selectedProductData }) 
     }
 
     try {
-      // Update or insert product into Supabase
       if (isEditMode) {
         const { data, error } = await supabase
           .from("inventory")
@@ -79,8 +75,8 @@ const AddProductOverlay = ({ onClose, onAdd, isEditMode, selectedProductData }) 
       }
 
       setTimeout(() => {
-        onAdd(); // Refresh the inventory list after a short delay
-        onClose(); // Close the overlay
+        onAdd();
+        onClose();
       }, 1000);
     } catch (error) {
       console.error("Error saving product:", error.message);
