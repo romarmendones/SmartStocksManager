@@ -12,13 +12,32 @@ const NotificationScreen = () => {
 
   const fetchNotifications = async () => {
     try {
-      const { data, error } = await supabase
+      // Fetch notifications from supabase
+      const { data: notificationsData, error: notificationsError } = await supabase
         .from('notifications')
         .select('*')
         .order('created_at', { ascending: false });
 
-      if (error) throw error;
-      setNotifications(data);
+      if (notificationsError) throw notificationsError;
+
+      // Fetch inventory items with low stock
+      const { data: inventoryData, error: inventoryError } = await supabase
+        .from('inventory')
+        .select('*')
+        .lt('stock', 10); // Assuming 10 is the threshold for low stock
+
+      if (inventoryError) throw inventoryError;
+
+      // Create stock alert notifications for low stock items
+      const stockAlerts = inventoryData.map(item => ({
+        id: `stock_${item.id}`,
+        type: 'alert',
+        message: `Low stock alert: ${item.product} has only ${item.stock} units remaining`,
+        created_at: new Date().toISOString()
+      }));
+
+      // Combine regular notifications with stock alerts
+      setNotifications([...notificationsData, ...stockAlerts]);
     } catch (error) {
       console.error('Error fetching notifications:', error.message);
     }

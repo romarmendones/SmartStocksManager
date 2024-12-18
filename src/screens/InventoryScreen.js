@@ -17,7 +17,9 @@ const InventoryScreen = () => {
   const [error, setError] = useState(null);
   const [saleProducts, setSaleProducts] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
+  const [totalRevenue, setTotalRevenue] = useState(0);
   const [receiptNumber, setReceiptNumber] = useState(null);
+  const [itemCount, setItemCount] = useState(0);
 
   const fetchInventory = async () => {
     try {
@@ -55,23 +57,39 @@ const InventoryScreen = () => {
         return;
       }
 
-      const existingProduct = saleProducts.find(
+      const existingProductIndex = saleProducts.findIndex(
         (item) => item.id === selectedProduct.id
       );
 
-      if (existingProduct) {
-        existingProduct.quantity += quantity;
+      let updatedSaleProducts;
+      if (existingProductIndex !== -1) {
+        updatedSaleProducts = [...saleProducts];
+        updatedSaleProducts[existingProductIndex] = {
+          ...updatedSaleProducts[existingProductIndex],
+          quantity: updatedSaleProducts[existingProductIndex].quantity + quantity
+        };
       } else {
-        saleProducts.push({ ...selectedProduct, quantity });
+        updatedSaleProducts = [...saleProducts, { ...selectedProduct, quantity }];
       }
 
-      setSaleProducts([...saleProducts]);
-      setTotalAmount(
-        saleProducts.reduce(
-          (total, product) => total + product.price * product.quantity,
-          0
-        )
+      setSaleProducts(updatedSaleProducts);
+      
+      // Calculate total amount and revenue
+      const newTotalAmount = updatedSaleProducts.reduce(
+        (total, product) => total + product.price * product.quantity,
+        0
       );
+      
+      const newTotalRevenue = updatedSaleProducts.reduce(
+        (total, product) => total + (product.price - (product.buying_price || 0)) * product.quantity,
+        0
+      );
+      
+      setTotalAmount(newTotalAmount);
+      setTotalRevenue(newTotalRevenue);
+      
+      // Update total item count
+      setItemCount(updatedSaleProducts.reduce((total, product) => total + product.quantity, 0));
     } catch (error) {
       console.error("Error adding product to sale:", error.message);
       alert("Failed to add product to sale.");
@@ -96,21 +114,25 @@ const InventoryScreen = () => {
           return;
         }
 
-        await supabase
+        const { error: updateError } = await supabase
           .from("inventory")
           .update({ stock: updatedStock })
           .eq("id", product.id);
 
+        if (updateError) throw updateError;
+
         if (updatedStock === 0) {
-          await supabase.from("notifications").insert({
+          const { error: notifError } = await supabase.from("notifications").insert({
             type: "alert",
             message: `Out of Stock: ${product.product} is now out of stock.`,
           });
+          if (notifError) throw notifError;
         } else if (updatedStock <= 5) {
-          await supabase.from("notifications").insert({
+          const { error: notifError } = await supabase.from("notifications").insert({
             type: "alert",
             message: `Low Stock: ${product.product} has low stock. Remaining: ${updatedStock}.`,
           });
+          if (notifError) throw notifError;
         }
       }
 
@@ -123,18 +145,22 @@ const InventoryScreen = () => {
 
       if (salesError) throw salesError;
 
-      await supabase.from("notifications").insert({
+      const { error: notifError } = await supabase.from("notifications").insert({
         type: "sales",
-        message: `New Sale: Total revenue ₱${totalAmount.toFixed(2)}.`,
+        message: `New Sale: Total revenue ₱${totalRevenue.toFixed(2)} from sales of ₱${totalAmount.toFixed(2)}.`,
       });
+
+      if (notifError) throw notifError;
 
       setSaleProducts([]);
       setTotalAmount(0);
+      setTotalRevenue(0);
+      setItemCount(0);
       alert("Sale completed successfully!");
       fetchInventory();
     } catch (error) {
       console.error("Error completing sale:", error.message);
-      alert("Failed to complete sale.");
+      alert(`Failed to complete sale: ${error.message}`);
     }
   };
 
@@ -222,6 +248,7 @@ const InventoryScreen = () => {
                   className="product-select"
                   onChange={async (e) => {
                     const productId = parseInt(e.target.value);
+                    if (!productId) return; // Skip if no product selected
                     const { data: product, error } = await supabase
                       .from("inventory")
                       .select("*")
@@ -243,7 +270,9 @@ const InventoryScreen = () => {
                     </option>
                   ))}
                 </select>
+                <p>Total Items: {itemCount}</p>
                 <p>Total Amount: ₱{totalAmount.toFixed(2)}</p>
+                <p>Net Revenue: ₱{totalRevenue.toFixed(2)}</p>
                 <button onClick={handleCompleteSale}>Complete Sale</button>
               </div>
 
@@ -258,7 +287,9 @@ const InventoryScreen = () => {
                       </li>
                     ))}
                   </ul>
-                  <h4>Total: ₱{totalAmount.toFixed(2)}</h4>
+                  <h4>Total Items: {itemCount}</h4>
+                  <h4>Total Amount: ₱{totalAmount.toFixed(2)}</h4>
+                  <h4>Net Revenue: ₱{totalRevenue.toFixed(2)}</h4>
                 </div>
               )}
               <button onClick={() => setIsPosOverlayVisible(false)}>
@@ -280,7 +311,8 @@ const InventoryScreen = () => {
                   <th>Code</th>
                   <th>Product</th>
                   <th>Type</th>
-                  <th>Price</th>
+                  <th>Buying Price</th>
+                  <th>Selling Price</th>
                   <th>Stock</th>
                   <th>Action</th>
                 </tr>
@@ -291,6 +323,7 @@ const InventoryScreen = () => {
                     <td>{item.code}</td>
                     <td>{item.product}</td>
                     <td>{item.type}</td>
+                    <td>₱{Number(item.buying_price || 0).toFixed(2)}</td>
                     <td>₱{Number(item.price || 0).toFixed(2)}</td>
                     <td>{item.stock}</td>
                     <td>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../Back-end/supabaseClient';  // Import Supabase client
+import { supabase } from '../Back-end/supabaseClient';
 import "../styles/DashboardScreen.css";
 
 const TotalSalesCard = ({ totalSales, previousSales }) => {
@@ -11,27 +11,37 @@ const TotalSalesCard = ({ totalSales, previousSales }) => {
   useEffect(() => {
     const fetchMonthlySales = async () => {
       const now = new Date();
-      
-      const { data, error } = await supabase.from('monthly_sales').select()
-        .order('yr', { ascending: false })
-        .order('mn', { ascending: false })
-        .limit(2);
-    
+      const prevMonth = new Date();
+      prevMonth.setMonth(prevMonth.getMonth() - 1);
+
+      // Get current and previous month sales
+      const { data, error } = await supabase
+        .from('monthly_sales')
+        .select('*')
+        .or(`and(yr.eq.${now.getFullYear()},mn.eq.${now.getMonth() + 1}),and(yr.eq.${prevMonth.getFullYear()},mn.eq.${prevMonth.getMonth() + 1})`);
+
       if (error) {
         console.error("Error getting sales: ", error.message);
         return;
       }
-      
-      const prevMonth = new Date();
-      prevMonth.setMonth(prevMonth.getMonth() - 1);
-      
-      for (var i in data) {
-          if (now.getFullYear() == data[i].yr && now.getMonth() + 1 == data[i].mn) {
-            setSalesTotal(data[i].amount);
-            setAnimatedSales(data[i].amount);
-          } else if (prevMonth.getFullYear() == data[i].yr && prevMonth.getMonth() + 1 == data[i].mn) {
-            setPrevSalesTotal(data[i].amount);
-          }
+
+      // Find current month sales
+      const currentMonthSales = data.find(
+        item => item.yr === now.getFullYear() && item.mn === now.getMonth() + 1
+      );
+
+      // Find previous month sales  
+      const previousMonthSales = data.find(
+        item => item.yr === prevMonth.getFullYear() && item.mn === prevMonth.getMonth() + 1
+      );
+
+      if (currentMonthSales) {
+        setSalesTotal(currentMonthSales.amount);
+        setAnimatedSales(currentMonthSales.amount);
+      }
+
+      if (previousMonthSales) {
+        setPrevSalesTotal(previousMonthSales.amount);
       }
     };
     
@@ -39,11 +49,13 @@ const TotalSalesCard = ({ totalSales, previousSales }) => {
   }, [totalSales]);
 
   const calculatePercentageChange = () => {
+    if (!prevSalesTotal) return 0;
     const change = ((salesTotal - prevSalesTotal) / prevSalesTotal) * 100;
     return change.toFixed(1);
   };
 
   const percentageChange = calculatePercentageChange();
+  const isPositiveChange = percentageChange >= 0;
 
   return (
     <div className="total-sales-card">
@@ -65,8 +77,8 @@ const TotalSalesCard = ({ totalSales, previousSales }) => {
       <h2 className="total-sales-title">Total Sales</h2>
       <div className="total-sales-value">₱ {animatedSales.toLocaleString()}</div>
       <div className="sales-growth">
-        <span className="sales-growth-icon">↑</span>
-        {percentageChange}% vs last Month
+        <span className="sales-growth-icon">{isPositiveChange ? '↑' : '↓'}</span>
+        {Math.abs(percentageChange)}% vs last Month
       </div>
       {/* Sales graph */}
       <div className="sales-graph">

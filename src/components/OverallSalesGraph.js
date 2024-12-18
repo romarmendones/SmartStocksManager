@@ -11,48 +11,58 @@ const OverallSalesChart = () => {
     const fetchChartData = async () => {
       try {
         const now = new Date();
+        const currentYear = now.getFullYear();
+        const lastYear = currentYear - 1;
 
-        // Query: Sales data for the past 24 months
+        // Query sales data for current and last year
         const { data, error } = await supabase
           .from("monthly_sales")
-          .select("yr, mn, amount")
-          .order("yr", { ascending: false })
-          .order("mn", { ascending: false })
-          .gte("created_at", new Date(new Date().setFullYear(now.getFullYear() - 1)));
+          .select("*")
+          .or(`yr.in.(${currentYear},${lastYear})`);
 
         if (error) {
           console.error("Error fetching chart data:", error.message);
           return;
         }
 
-        // Initialize arrays for categories and values
-        const categories = [];
-        const currentYearData = [];
-        const lastYearData = [];
-        const currentYear = now.getFullYear();
-        const lastYear = currentYear - 1;
-
         const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const categories = [];
+        const currentYearData = new Array(12).fill(0);
+        const lastYearData = new Array(12).fill(0);
 
-        // Populate data for 12 months for last and current year
-        for (let i = 0; i < 12; i++) {
-          const monthIndex = (now.getMonth() - 11 + i + 12) % 12; // Wrap around months
+        // Fill in actual data where it exists
+        data.forEach(entry => {
+          const monthIndex = entry.mn - 1;
+          if (entry.yr === currentYear) {
+            currentYearData[monthIndex] = parseFloat(entry.amount) || 0;
+          } else if (entry.yr === lastYear) {
+            lastYearData[monthIndex] = parseFloat(entry.amount) || 0;
+          }
+        });
+
+        // Generate categories starting from current month going back 12 months
+        const currentMonth = now.getMonth();
+        for (let i = 11; i >= 0; i--) {
+          const monthIndex = (currentMonth - i + 12) % 12;
           categories.push(months[monthIndex]);
-
-          // Find data for current year
-          const currentData = data.find(
-            (entry) => entry.yr === currentYear && entry.mn === monthIndex + 1
-          );
-          currentYearData.push(currentData ? currentData.amount : 0);
-
-          // Find data for last year
-          const lastYearDataEntry = data.find(
-            (entry) => entry.yr === lastYear && entry.mn === monthIndex + 1
-          );
-          lastYearData.push(lastYearDataEntry ? lastYearDataEntry.amount : 0);
         }
 
-        setChartData({ categories, currentYearData, lastYearData });
+        // Align the data arrays with the categories
+        const alignedCurrentYearData = [];
+        const alignedLastYearData = [];
+        
+        for (let i = 11; i >= 0; i--) {
+          const monthIndex = (currentMonth - i + 12) % 12;
+          alignedCurrentYearData.push(currentYearData[monthIndex]);
+          alignedLastYearData.push(lastYearData[monthIndex]);
+        }
+
+        setChartData({ 
+          categories,
+          currentYearData: alignedCurrentYearData,
+          lastYearData: alignedLastYearData
+        });
+
       } catch (err) {
         console.error("Error processing chart data:", err.message);
       }
@@ -61,17 +71,60 @@ const OverallSalesChart = () => {
     fetchChartData();
   }, []);
 
+  const calculateYearOverYearChange = () => {
+    if (!chartData) return 0;
+    
+    const currentYearTotal = chartData.currentYearData.reduce((a, b) => a + b, 0);
+    const lastYearTotal = chartData.lastYearData.reduce((a, b) => a + b, 0);
+    
+    if (lastYearTotal === 0) return 100;
+    return ((currentYearTotal - lastYearTotal) / lastYearTotal * 100).toFixed(1);
+  };
+
   const options = {
-    chart: { type: "area", height: 350, toolbar: { show: false } },
-    dataLabels: { enabled: false },
-    stroke: { curve: "smooth" },
-    xaxis: { categories: chartData ? chartData.categories : [] },
-    yaxis: {
-      labels: { formatter: (value) => `₱ ${value / 1000}K` },
+    chart: {
+      type: "area",
+      height: 350,
+      toolbar: { show: false },
+      zoom: { enabled: false }
     },
-    tooltip: { x: { format: "MMM" } },
+    dataLabels: { enabled: false },
+    stroke: {
+      curve: "smooth",
+      width: 2
+    },
+    xaxis: {
+      categories: chartData ? chartData.categories : [],
+      labels: {
+        style: {
+          fontSize: '12px'
+        }
+      }
+    },
+    yaxis: {
+      labels: {
+        formatter: (value) => `₱${(value/1000).toFixed(1)}K`,
+        style: {
+          fontSize: '12px'
+        }
+      }
+    },
+    tooltip: {
+      x: { format: "MMM" },
+      y: {
+        formatter: (value) => `₱${value.toFixed(2)}`
+      }
+    },
     legend: { show: false },
     colors: ["#0A9B21", "#FF5C00"],
+    fill: {
+      type: 'gradient',
+      gradient: {
+        shadeIntensity: 1,
+        opacityFrom: 0.7,
+        opacityTo: 0.2
+      }
+    }
   };
 
   const series = chartData
@@ -81,14 +134,17 @@ const OverallSalesChart = () => {
       ]
     : [];
 
+  const yearChange = calculateYearOverYearChange();
+  const isPositiveChange = yearChange >= 0;
+
   return (
     <div className="overall-sales-graph-card">
       <div className="overall-sales-header">
         <div className="flex items-center">
           <h2 className="text-xl font-semibold mr-2">Overall Sales</h2>
-          <div className="flex items-center text-green-500">
-            <FaArrowUp className="mr-1" />
-            <span className="text-sm font-semibold">vs Last Year</span>
+          <div className={`flex items-center ${isPositiveChange ? 'text-green-500' : 'text-red-500'}`}>
+            <FaArrowUp className={`mr-1 ${!isPositiveChange ? 'transform rotate-180' : ''}`} />
+            <span className="text-sm font-semibold">{Math.abs(yearChange)}% vs Last Year</span>
           </div>
         </div>
         <div className="overall-sales-legend">
@@ -106,7 +162,7 @@ const OverallSalesChart = () => {
         {chartData ? (
           <ReactApexChart options={options} series={series} type="area" height={256} />
         ) : (
-          <div>Loading...</div>
+          <div className="loading-spinner">Loading...</div>
         )}
       </div>
     </div>
