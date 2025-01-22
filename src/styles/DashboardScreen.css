@@ -6,12 +6,59 @@
 .main-sidebar {
   position: fixed;
   left: 0;
-  height: 100vh;
-  background: #fff;
-  box-shadow: 4px 0 16px rgba(0, 0, 0, 0.08);
+  width: 250px; /* Increased the width */
+  height: 100vh; /* Full height */
+  background: linear-gradient(to bottom, #FFA500, #000000); /* Gradient background to match your theme */
+  box-shadow: 4px 0 16px rgba(0, 0, 0, 0.2); /* Slightly darker shadow for better visibility */
   z-index: 100;
   transition: all 0.3s ease;
+  padding-top: 20px; /* Adds padding for content */
 }
+/* Sidebar logo styling */
+.main-sidebar .logo {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.main-sidebar .logo img {
+  width: 100px; /* Adjust logo size */
+}
+
+/* Sidebar navigation items */
+.main-sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.main-sidebar ul li {
+  margin: 10px 0;
+}
+
+.main-sidebar ul li a {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 16px; /* Slightly larger text size */
+  transition: background 0.3s ease;
+}
+
+.main-sidebar ul li a:hover,
+.main-sidebar ul li a.active {
+  background: rgba(255, 255, 255, 0.2); /* Highlight on hover or active */
+}
+
+/* Sidebar footer (if any) */
+.main-sidebar .settings {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+}
+
 
 .dashboard-content {
   margin-left: 250px;
