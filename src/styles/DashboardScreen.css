@@ -6,22 +6,20 @@
 .main-sidebar {
   position: fixed;
   left: 0;
-  width: 250px; /* Increased the width */
+  width: 560px; /* Increased the width */
   height: 100vh; /* Full height */
   background: linear-gradient(to bottom, #FFA500, #000000); /* Gradient background to match your theme */
-  box-shadow: 4px 0 16px rgba(0, 0, 0, 0.2); /* Slightly darker shadow for better visibility */
-  z-index: 100;
-  transition: all 0.3s ease;
-  padding-top: 20px; /* Adds padding for content */
+  padding-bottom: 50px; /* Adds padding for content */
 }
+
 /* Sidebar logo styling */
 .main-sidebar .logo {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .main-sidebar .logo img {
-  width: 100px; /* Adjust logo size */
+  width: 20px; /* Adjust logo size */
 }
 
 /* Sidebar navigation items */
@@ -38,11 +36,11 @@
 .main-sidebar ul li a {
   display: flex;
   align-items: center;
-  padding: 12px 20px;
+  padding: 12px 5px;
   color: #fff;
   text-decoration: none;
   border-radius: 8px;
-  font-size: 16px; /* Slightly larger text size */
+  font-size: 20px; /* Slightly larger text size */
   transition: background 0.3s ease;
 }
 
@@ -51,12 +49,43 @@
   background: rgba(255, 255, 255, 0.2); /* Highlight on hover or active */
 }
 
-/* Sidebar footer (if any) */
+/* Content section including logout */
+.main-sidebar .content-section {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 .main-sidebar .settings {
-  position: absolute;
-  bottom: 20px;
-  width: 100%;
+  margin-top: auto;
+  padding: 20px;
   text-align: center;
+}
+
+.main-sidebar .logout {
+  padding: 15px;
+  text-align: center;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.main-sidebar .logout:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 768px) {
+  .main-sidebar {
+    width: 200px; /* Smaller width for mobile screens */
+  }
+
+  .main-sidebar ul li a {
+    font-size: 12px; /* Adjust text size for smaller screens */
+  }
+  
+  .main-sidebar .logout {
+    font-size: 12px;
+  }
 }
 
 
