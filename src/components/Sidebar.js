@@ -33,9 +33,34 @@ const Sidebar = () => {
           <DashboardIcon className="menu-icon" /> {/* Updated to Material UI Dashboard icon */}
           <span>Dashboard</span>
         </NavLink>
+        <NavLink to="/sales" className="menu-item" activeClassName="active">
+          <FaBox className="menu-icon" />
+          <span>Sales</span>
+        </NavLink>
+        
         <NavLink to="/inventory" className="menu-item" activeClassName="active">
           <FaBox className="menu-icon" />
           <span>Inventory</span>
+        </NavLink>
+        <NavLink to="/activity" className="menu-item" activeClassName="active">
+          <FaBox className="menu-icon" />
+          <span>Activity Log</span>
+        </NavLink>
+        <NavLink to="/branch" className="menu-item" activeClassName="active">
+          <FaBox className="menu-icon" />
+          <span>Branch</span>
+        </NavLink>
+        <NavLink to="/order" className="menu-item" activeClassName="active">
+          <FaBox className="menu-icon" />
+          <span>Orders </span>
+        </NavLink>
+        <NavLink to="/signup" className="menu-item" activeClassName="active">
+          <FaBox className="menu-icon" />
+          <span>Staff Registration</span>
+        </NavLink>
+        <NavLink to="/super" className="menu-item" activeClassName="active">
+          <FaBox className="menu-icon" />
+          <span>Branch Admins</span>
         </NavLink>
         <NavLink to="/settings" className="menu-item" activeClassName="active">
           <FaCog className="menu-icon" />

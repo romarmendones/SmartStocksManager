@@ -1,101 +1,140 @@
 import React, { useState, useEffect } from 'react';
+import { Card } from 'antd';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { supabase } from '../Back-end/supabaseClient';
-import "../styles/DashboardScreen.css";
+import '../styles/TotalSalesCard.css';
 
-const TotalSalesCard = ({ totalSales, previousSales }) => {
-  const [animatedSales, setAnimatedSales] = useState(0);
-  const [timeRange, setTimeRange] = useState("1Y");
-  const [salesTotal, setSalesTotal] = useState(0);
-  const [prevSalesTotal, setPrevSalesTotal] = useState(0);
+const YEARS = [2020, 2021, 2022, 2023, 2024, 2025];
+const COLORS = ['#8884d8'];
+
+const CustomTooltip = ({ active, payload, label }) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="custom-tooltip">
+        <p className="label">{`Year: ${label}`}</p>
+        <p>{`Total Sales: ${new Intl.NumberFormat('en-PH', {
+          style: 'currency',
+          currency: 'PHP'
+        }).format(payload[0].value)}`}</p>
+      </div>
+    );
+  }
+  return null;
+};
+
+const TotalSalesCard = () => {
+  const [salesData, setSalesData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+  const [yearlyTotal, setYearlyTotal] = useState(0);
 
   useEffect(() => {
-    const fetchMonthlySales = async () => {
-      const now = new Date();
-      const prevMonth = new Date();
-      prevMonth.setMonth(prevMonth.getMonth() - 1);
+    fetchSalesData();
+  }, []);
 
-      // Get current and previous month sales
-      const { data, error } = await supabase
+  const fetchSalesData = async () => {
+    try {
+      setIsLoading(true);
+      
+      // Get all sales data for 2020-2025
+      const { data: allSales, error } = await supabase
         .from('monthly_sales')
         .select('*')
-        .or(`and(yr.eq.${now.getFullYear()},mn.eq.${now.getMonth() + 1}),and(yr.eq.${prevMonth.getFullYear()},mn.eq.${prevMonth.getMonth() + 1})`);
+        .gte('yr', 2020)
+        .lte('yr', 2025)
+        .order('yr', { ascending: true });
 
-      if (error) {
-        console.error("Error getting sales: ", error.message);
-        return;
-      }
+      if (error) throw error;
 
-      // Find current month sales
-      const currentMonthSales = data.find(
-        item => item.yr === now.getFullYear() && item.mn === now.getMonth() + 1
-      );
+      // Calculate yearly totals
+      const yearlyTotals = YEARS.map(year => {
+        const yearSales = allSales.filter(sale => sale.yr === year);
+        const total = yearSales.reduce((sum, sale) => sum + (sale.amount || 0), 0);
+        return {
+          year: year.toString(),
+          amount: total
+        };
+      });
 
-      // Find previous month sales  
-      const previousMonthSales = data.find(
-        item => item.yr === prevMonth.getFullYear() && item.mn === prevMonth.getMonth() + 1
-      );
+      setSalesData(yearlyTotals);
+      
+      // Set initial yearly total
+      const currentYearTotal = yearlyTotals.find(data => data.year === selectedYear.toString())?.amount || 0;
+      setYearlyTotal(currentYearTotal);
 
-      if (currentMonthSales) {
-        setSalesTotal(currentMonthSales.amount);
-        setAnimatedSales(currentMonthSales.amount);
-      }
-
-      if (previousMonthSales) {
-        setPrevSalesTotal(previousMonthSales.amount);
-      }
-    };
-    
-    fetchMonthlySales();
-  }, [totalSales]);
-
-  const calculatePercentageChange = () => {
-    if (!prevSalesTotal) return 0;
-    const change = ((salesTotal - prevSalesTotal) / prevSalesTotal) * 100;
-    return change.toFixed(1);
+    } catch (error) {
+      console.error('Error:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const percentageChange = calculatePercentageChange();
-  const isPositiveChange = percentageChange >= 0;
+  const formatCurrency = (value) => {
+    return new Intl.NumberFormat('en-PH', {
+      style: 'currency',
+      currency: 'PHP'
+    }).format(value);
+  };
+
+  useEffect(() => {
+    const total = salesData.find(data => data.year === selectedYear.toString())?.amount || 0;
+    setYearlyTotal(total);
+  }, [selectedYear, salesData]);
 
   return (
-    <div className="total-sales-card">
-      { false && // disable muna
-      <div className="time-range-selector">
-        {["1W", "1M", "6M", "1Y"].map((range) => (
-          <span
-            key={range}
-            className={`time-range-option ${
-              timeRange === range ? "selected" : ""
-            }`}
-            onClick={() => setTimeRange(range)}
-          >
-            {range}
-          </span>
-        ))}
+    <Card className="total-sales-card">
+      <div className="sales-header">
+        <h2>Total Sales Over Years</h2>
+        <select 
+          value={selectedYear}
+          onChange={(e) => setSelectedYear(Number(e.target.value))}
+          className="time-range-selector"
+        >
+          {YEARS.map(year => (
+            <option key={year} value={year}>{year}</option>
+          ))}
+        </select>
       </div>
-      }
-      <h2 className="total-sales-title">Total Sales</h2>
-      <div className="total-sales-value">₱ {animatedSales.toLocaleString()}</div>
-      <div className="sales-growth">
-        <span className="sales-growth-icon">{isPositiveChange ? '↑' : '↓'}</span>
-        {Math.abs(percentageChange)}% vs last Month
-      </div>
-      {/* Sales graph */}
-      <div className="sales-graph">
-        <svg width="100%" height="100%" viewBox="0 0 527 250" preserveAspectRatio="none">
-          <path
-            d="M0 250 L0 120 C100 90, 200 150, 300 100 C400 50, 500 120, 527 80 L527 250 Z"
-            fill="url(#salesGradient)"
-          />
-          <defs>
-            <linearGradient id="salesGradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="10%" stopColor="rgba(10,155,33,0.44)" />
-              <stop offset="100%" stopColor="rgba(10,155,33,0)" />
-            </linearGradient>
-          </defs>
-        </svg>
-      </div>
-    </div>
+
+      {isLoading ? (
+        <div className="loading">Loading...</div>
+      ) : (
+        <>
+          <div className="chart-container">
+            <ResponsiveContainer width="100%" height={400}>
+              <LineChart data={salesData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis 
+                  dataKey="year"
+                  padding={{ left: 30, right: 30 }}
+                  ticks={YEARS}
+                />
+                <YAxis 
+                  tickFormatter={formatCurrency}
+                />
+                <Tooltip content={<CustomTooltip />} />
+                <Legend />
+                <Line
+                  type="monotone"
+                  dataKey="amount"
+                  name="Total Sales"
+                  stroke={COLORS[0]}
+                  strokeWidth={2}
+                  dot={{ r: 6 }}
+                  activeDot={{ r: 8 }}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="sales-amount">
+            {formatCurrency(yearlyTotal)}
+          </div>
+          <div className="comparison-text">
+            Total Sales for {selectedYear}
+          </div>
+        </>
+      )}
+    </Card>
   );
 };
 

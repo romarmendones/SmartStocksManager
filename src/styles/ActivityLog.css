@@ -1,0 +1,66 @@
+.activity-container {
+    display: flex;
+    height: 100vh;
+    background-color: #f8fafc;
+  }
+  
+  .activity-content {
+    flex: 1;
+    padding: 32px;
+    margin-left: 250px;
+  }
+  
+  .activity-header {
+    margin-bottom: 24px;
+  }
+  
+  .activity-header h1 {
+    color: #1e293b;
+    font-size: 24px;
+  }
+  
+  .activity-table-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  .activity-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .activity-table th,
+  .activity-table td {
+    padding: 16px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  
+  .activity-table th {
+    background: #f8fafc;
+    font-weight: 600;
+    color: #64748b;
+  }
+  
+  .activity-table td {
+    color: #334155;
+  }
+  
+  .activity-table tbody tr:hover {
+    background-color: #f1f5f9;
+  }
+  
+  .loading,
+  .error {
+    text-align: center;
+    padding: 24px;
+    color: #64748b;
+  }
+  
+  .error {
+    color: #ef4444;
+    background: #fee2e2;
+    border-radius: 8px;
+  }

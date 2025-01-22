@@ -39,9 +39,7 @@ const LoginScreen = () => {
 
         <LoginButton text="Login" onClick={handleLogin} />
 
-        <p>
-          Don’t have an account? <a href="/signup">Sign up here.</a>
-        </p>
+      
       </div>
     </div>
   );

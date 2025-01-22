@@ -1,110 +1,62 @@
-.signup-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background: linear-gradient(to bottom, #FFA500, #000000);
-  }
-  
-  .signup-logo {
-    margin-right: 50px;
-  }
-  
-  .signup-logo img {
-    width: 400px;
-  }
-  
-  .signup-form {
-    background: white;
-    padding: 25px 30px;
-    border-radius: 12px;
-    text-align: center;
-    width: 340px;
-  }
-  
-  .signup-form h2 {
-    font-size: 32px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    color: #000;
-  }
-  
-  .signup-input-container {
-    position: relative;
-    width: 85%;
-    margin: 8px 0;
-  }
-  
-  .signup-input {
-    width: 100%;
-    padding: 12px 40px 12px 12px;
-    border: 1px solid #000;
-    border-radius: 25px;
-    font-size: 14px;
-  }
-  
-  .signup-password-toggle-icon {
-    position: absolute;
-    right: -30px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: #888;
-    font-size: 16px;
-  }
-  
-  .signup-button {
-    background-color: #000;
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 25px;
-    text-align: center;
-    margin: 10px auto;
-    width: 55%;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    border: none;
-    display: block;
-  }
-  
-  .signup-google-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #fff;
-    padding: 8px;
-    border-radius: 25px;
-    border: 1px solid #000;
-    width: 50%;
-    margin: 10px auto;
-    cursor: pointer;
-  }
-  
-  .signup-google-button img {
-    width: 20px;
-    height: 20px;
-    margin-right: 10px;
-  }
-  
-  .signup-google-button-text {
-    color: #000;
-    font-size: 14px;
-  }
-  
-  .signup-form p {
-    margin-top: 15px;
-    font-size: 12px;
-    color: #333;
-  }
-  
-  .signup-form p .login-link {
-    color: #007bff;
-    text-decoration: none;
-    font-weight: bold;
-  }
-  
-  .signup-form p .login-link:hover {
-    text-decoration: underline;
-  }
-  
+.registration-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.registration-card {
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.logo-container {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.logo {
+  height: 80px;
+  margin-bottom: 16px;
+}
+
+h1 {
+  text-align: center;
+  color: #1890ff;
+  margin-bottom: 32px;
+}
+
+.submit-button {
+  height: 45px;
+  font-size: 16px;
+  background: #1890ff;
+  border-radius: 6px;
+}
+
+.submit-button:hover {
+  background: #40a9ff;
+}
+
+.ant-input-affix-wrapper {
+  border-radius: 6px;
+}
+
+.ant-select {
+  width: 100%;
+}
+
+.ant-form-item {
+  margin-bottom: 24px;
+}
+
+.ant-table {
+  background: white;
+  border-radius: 8px;
+}
+
+.ant-card {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.submit-button {
+  margin-top: 16px;
+}

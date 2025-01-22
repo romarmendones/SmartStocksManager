@@ -1,0 +1,186 @@
+.sales-screen {
+  padding: 24px;
+}
+  
+  .sales-content {
+    flex: 1;
+    padding: 32px;
+    overflow-y: auto;
+  }
+  
+  .sales-header {
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #e2e8f0;
+  }
+  
+  .sales-header h1 {
+    font-size: 28px;
+    color: #1e293b;
+    margin: 0;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+  }
+  
+  .notifications-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+  
+  .notifications-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .notification-card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 
+                0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .notification-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+                0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+  
+  .notification-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 4px;
+    background: #4f46e5;
+    border-radius: 4px 0 0 4px;
+  }
+  
+  .notification-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  
+  .notification-type {
+    color: #4f46e5;
+    font-weight: 600;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .notification-type::before {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: #4f46e5;
+    border-radius: 50%;
+  }
+  
+  .notification-time {
+    color: #64748b;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  
+  .notification-content {
+    color: #334155;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+  
+  .notification-details {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #e2e8f0;
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  
+  .loading, .no-notifications {
+    text-align: center;
+    padding: 60px 20px;
+    color: #64748b;
+    font-size: 16px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Animations */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .notification-card {
+    animation: fadeIn 0.3s ease-out forwards;
+  }
+  
+  /* Responsive Design */
+  @media screen and (max-width: 768px) {
+    .sales-content {
+      padding: 20px;
+    }
+  
+    .sales-header h1 {
+      font-size: 24px;
+    }
+  
+    .notification-card {
+      padding: 20px;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .sales-content {
+      padding: 16px;
+    }
+  
+    .notification-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+  }
+
+  .sales-screen {
+  padding: 24px;
+}
+
+.metrics-row {
+  margin-bottom: 24px;
+}
+
+.sales-table-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.ant-table {
+  margin-top: 16px;
+}
+
+.ant-statistic-title {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.ant-statistic-content {
+  font-size: 24px;
+  font-weight: 600;
+}

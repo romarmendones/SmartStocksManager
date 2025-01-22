@@ -1,0 +1,130 @@
+/* Layout Structure */
+.order-layout {
+    min-height: 100vh;
+    background: #f0f2f5;
+    display: flex;
+  }
+  
+  .main-layout {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .order-content {
+    margin-left: 250px !important;
+    padding: 16px;
+    background: #f0f2f5;
+    min-height: 0;
+  }
+  
+  .content-container {
+    max-width: 1200px;
+    margin: 0;
+  }
+  
+  .card-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 0;
+  }
+  
+  .admin-info-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    margin: 0;
+  }
+  
+  .admin-info-card .ant-descriptions {
+    padding: 16px;
+    margin: 0;
+  }
+  
+  .order-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    margin: 0;
+  }
+  
+  .order-card .ant-card-body {
+    padding: 24px;
+  }
+  
+  .ant-table-wrapper {
+    width: 100%;
+  }
+  
+  .ant-table-thead > tr > th {
+    background: #fafafa;
+    padding: 16px;
+    font-weight: 600;
+  }
+  
+  .ant-table-tbody > tr > td {
+    padding: 16px;
+  }
+  
+  .action-buttons {
+    display: flex;
+    gap: 8px;
+  }
+  
+  /* Status Tags */
+  .ant-tag {
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-weight: 500;
+  }
+  
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #f0f2f5;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #d9d9d9;
+    border-radius: 3px;
+  }
+  
+  /* Responsive Design */
+  @media screen and (max-width: 992px) {
+    .order-content {
+      margin-left: 0 !important;
+      padding: 12px;
+    }
+  
+    .action-buttons {
+      flex-direction: column;
+      gap: 4px;
+    }
+  }
+  
+  @media screen and (max-width: 576px) {
+    .order-content {
+      padding: 8px;
+    }
+  
+    .card-wrapper {
+      gap: 8px;
+    }
+  
+    .admin-info-card,
+    .order-card {
+      border-radius: 8px;
+    }
+  
+    .order-card .ant-card-body {
+      padding: 16px;
+    }
+  
+    .ant-table-tbody > tr > td {
+      padding: 12px;
+    }
+  }

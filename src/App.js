@@ -11,6 +11,12 @@ import SettingsScreen from "./screens/SettingsScreen";
 import ChangePasswordScreen from './screens/ChangePasswordScreen';
 import SuccessChangeScreen from './screens/SuccessChangeScreen';
 import NotificationScreen from './screens/NotificationScreen';
+import SalesScreen from './screens/SalesScreen';
+import Activitylog from './screens/Activitylog';
+import Branches from './screens/Branches';
+import Branchsuper from './screens/Branchsuper';
+import OrderScreen from './screens/OrderScreen';
+
 
 function App() {
   return (
@@ -23,10 +29,15 @@ function App() {
         <Route path="/success-forgot" element={<SuccessForgotScreen />} />
         <Route path="/dashboard" element={<DashboardScreen />} />
         <Route path="/inventory" element={<InventoryScreen />} />
+        <Route path="/sales" element={<SalesScreen />} />
         <Route path="/settings" element={<SettingsScreen />} /> 
         <Route path="/change-password" element={<ChangePasswordScreen />} />
         <Route path="/success-change" element={<SuccessChangeScreen />} />
         <Route path="/notifications" element={<NotificationScreen />} />
+        <Route path="/activity" element={<Activitylog />} />
+        <Route path="/branch" element={<Branches />} />
+        <Route path="/super" element={<Branchsuper />} />
+        <Route path="/order" element={<OrderScreen />} />
       </Routes>
     </Router>
   );
