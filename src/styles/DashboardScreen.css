@@ -1,28 +1,35 @@
 .dashboard-layout {
   min-height: 100vh;
   background: #f0f2f5;
+  
 }
 
+/* Main Sidebar Styling */
 .main-sidebar {
   position: fixed;
-  left: 0;
-  width: 560px; /* Increased the width */
-  height: 100vh; /* Full height */
-  background: linear-gradient(to bottom, #FFA500, #000000); /* Gradient background to match your theme */
-  padding-bottom: 50px; /* Adds padding for content */
+  top:0;
+  left:0;
+  z-index: 40;
+  width: 16rem;
+  background: linear-gradient(to top, #FFA500, #000000); /* Orange to Black gradient */
+  color: #111827;
+  transform: translate(-100);
+  transition: transform 0.3s ease; /* Smooth transition for hover and state changes */
 }
 
-/* Sidebar logo styling */
+/* Sidebar Logo */
 .main-sidebar .logo {
   text-align: center;
-  margin-bottom: 10px;
+  padding: 20px 0;
+  margin-bottom: 25px;
 }
 
 .main-sidebar .logo img {
-  width: 20px; /* Adjust logo size */
+  width: 120px; /* Adjusted for larger logo */
+  height: auto;
 }
 
-/* Sidebar navigation items */
+/* Sidebar Navigation */
 .main-sidebar ul {
   list-style: none;
   padding: 0;
@@ -30,61 +37,72 @@
 }
 
 .main-sidebar ul li {
-  margin: 10px 0;
+  margin: 5px 15px; /* Margin for consistent spacing */
 }
 
 .main-sidebar ul li a {
   display: flex;
   align-items: center;
-  padding: 12px 5px;
+  padding: 12px 15px; /* Enhanced padding for better spacing */
   color: #fff;
   text-decoration: none;
-  border-radius: 8px;
-  font-size: 20px; /* Slightly larger text size */
-  transition: background 0.3s ease;
+  border-radius: 8px; /* Rounded corners for buttons */
+  font-size: 16px; /* Adjusted for readability */
+  gap: 10px; /* Spacing between icon and text */
+  transition: all 0.3s ease; /* Smooth hover transition */
 }
 
 .main-sidebar ul li a:hover,
 .main-sidebar ul li a.active {
-  background: rgba(255, 255, 255, 0.2); /* Highlight on hover or active */
+  background: rgba(255, 255, 255, 0.2); /* Highlight effect */
+  transform: translateX(5px); /* Subtle slide on hover */
 }
 
-/* Content section including logout */
+/* Content Section & Settings */
 .main-sidebar .content-section {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: 100%; /* Full height for sidebar */
 }
 
 .main-sidebar .settings {
-  margin-top: auto;
+  margin-top: auto; /* Push settings to the bottom */
   padding: 20px;
   text-align: center;
 }
 
+/* Logout Button */
 .main-sidebar .logout {
   padding: 15px;
   text-align: center;
   color: #fff;
   cursor: pointer;
-  transition: background 0.3s ease;
+  margin: 10px 15px;
+  border-radius: 8px;
+  transition: all 0.3s ease; /* Smooth hover transition */
 }
 
 .main-sidebar .logout:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.2); /* Highlight effect on hover */
 }
 
+/* Responsive Design */
 @media (max-width: 768px) {
   .main-sidebar {
-    width: 200px; /* Smaller width for mobile screens */
+    width: 200px; /* Adjust sidebar width for smaller screens */
   }
 
   .main-sidebar ul li a {
-    font-size: 12px; /* Adjust text size for smaller screens */
+    font-size: 14px; /* Smaller text for compact view */
+    padding: 10px; /* Adjust padding for smaller screens */
   }
-  
+
   .main-sidebar .logout {
-    font-size: 12px;
+    font-size: 14px; /* Reduced font size for logout button */
+  }
+
+  .main-sidebar .logo img {
+    width: 100px; /* Adjust logo size for smaller screens */
   }
 }
 
@@ -151,7 +169,7 @@
   background: #fff;
   padding: 32px;
   border-radius: 16px;
-  width: 400px;
+  width: 300px;
   text-align: center;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   animation: slideIn 0.3s ease;
@@ -168,19 +186,19 @@
   padding: 12px 32px;
   border-radius: 8px;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 100;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .logout-modal button:first-child {
-  background: #1890ff;
+  background: #FFA500; /* Updated to match theme */
   color: #fff;
   border: none;
 }
 
 .logout-modal button:first-child:hover {
-  background: #40a9ff;
+  background: #FF8C00; /* Darker orange on hover */
   transform: translateY(-1px);
 }
 
@@ -190,8 +208,8 @@
 }
 
 .logout-modal button:last-child:hover {
-  border-color: #1890ff;
-  color: #1890ff;
+  border-color: #FFA500;
+  color: #FFA500;
 }
 
 @keyframes fadeIn {
@@ -228,7 +246,12 @@
   }
   
   .main-sidebar {
-    display: none;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+  
+  .main-sidebar.active {
+    transform: translateX(0);
   }
   
   .content-container {
@@ -248,19 +271,24 @@
 }
 
 /* Custom Scrollbar */
-.notification-sider::-webkit-scrollbar {
+.notification-sider::-webkit-scrollbar,
+.main-sidebar::-webkit-scrollbar {
   width: 6px;
 }
 
-.notification-sider::-webkit-scrollbar-track {
-  background: #f0f2f5;
+.notification-sider::-webkit-scrollbar-track,
+.main-sidebar::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-.notification-sider::-webkit-scrollbar-thumb {
-  background: #d9d9d9;
+.notification-sider::-webkit-scrollbar-thumb,
+.main-sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 3px;
 }
 
-.notification-sider::-webkit-scrollbar-thumb:hover {
-  background: #bfbfbf;
+.notification-sider::-webkit-scrollbar-thumb:hover,
+.main-sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
 }
+
