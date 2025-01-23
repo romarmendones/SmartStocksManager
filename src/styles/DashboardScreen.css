@@ -4,18 +4,29 @@
   
 }
 
-/* Main Sidebar */
+/* Main Sidebar Styling */
 .main-sidebar {
-  position: flex;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
-  filter: drop-shadow(0px 80px 80px rgba(0, 0, 0, 0.25));
-  background: linear-gradient(180deg, #FFA500 12%, #000000 100%); 
+  position: fixed;
+  top:0;
+  left:0;
+  z-index: 40;
+  width: 16rem;
+  background: linear-gradient(to top, #FFA500, #000000); /* Orange to Black gradient */
+  color: #111827;
+  transform: translate(-100);
+  transition: transform 0.3s ease; /* Smooth transition for hover and state changes */
+}
 
+/* Sidebar Logo */
+.main-sidebar .logo {
+  text-align: center;
+  padding: 20px 0;
+  margin-bottom: 25px;
+}
 
-  
+.main-sidebar .logo img {
+  width: 120px; /* Adjusted for larger logo */
+  height: auto;
 }
 
 /* Sidebar Navigation */
@@ -25,135 +36,73 @@
   margin: 0;
 }
 
+.main-sidebar ul li {
+  margin: 5px 15px; /* Margin for consistent spacing */
+}
+
 .main-sidebar ul li a {
-  position: relative;
   display: flex;
   align-items: center;
-  padding: 15px 32px;
+  padding: 12px 15px; /* Enhanced padding for better spacing */
+  color: #fff;
   text-decoration: none;
-  font-family: 'Lato';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 22px;
-  color: #FFFFFF;
+  border-radius: 8px; /* Rounded corners for buttons */
+  font-size: 16px; /* Adjusted for readability */
+  gap: 10px; /* Spacing between icon and text */
+  transition: all 0.3s ease; /* Smooth hover transition */
 }
 
-.main-sidebar ul li a .icon {
-  width: 20px;
-  height: 20px;
-  margin-right: 12px;
-  border: 2px solid #FFFFFF;
+.main-sidebar ul li a:hover,
+.main-sidebar ul li a.active {
+  background: rgba(255, 255, 255, 0.2); /* Highlight effect */
+  transform: translateX(5px); /* Subtle slide on hover */
 }
 
-/* Dashboard Link */
-.main-sidebar .dashboard-link {
-  position: absolute;
-  width: 110px;
-  height: 22px;
-  left: 31px;
-  top: 240px;
-}
-
-/* Sales Link */
-.main-sidebar .sales-link {
-  position: absolute;
-  width: 71px;
-  height: 22px;
-  left: 30px;
-  top: 287px;
-}
-
-/* Inventory Link */
-.main-sidebar .inventory-link {
-  position: absolute;
-  width: 107px;
-  height: 23px;
-  left: 30px;
-  top: 332px;
-}
-
-/* Audit Logs Link */
-.main-sidebar .audit-logs-link {
-  position: absolute;
-  width: 113px;
-  height: 22px;
-  left: 32px;
-  top: 378px;
-}
-
-/* Branch Request Link */
-.main-sidebar .branch-request-link {
-  position: absolute;
-  width: 154px;
-  height: 22px;
-  left: 32px;
-  top: 423px;
-}
-
-/* Administrators Link */
-.main-sidebar .administrators-link {
-  position: absolute;
-  width: 145px;
-  height: 22px;
-  left: 32px;
-  top: 468px;
-}
-
-/* Staff Registration Link */
-.main-sidebar .staff-registration-link {
-  position: absolute;
-  width: 164px;
-  height: 22px;
-  left: 32px;
-  top: 513px;
-}
-
-/* Settings Link */
-.main-sidebar .settings-link {
-  position: absolute;
-  width: 93px;
-  height: 22px;
-  left: 32px;
-  top: 557px;
-}
-
-.main-sidebar .settings-icon {
-  position: absolute;
-  width: 17px;
-  height: 17px;
-  left: 32px;
-  top: 560px;
-  border: 2px solid #FFFAFA;
-}
-
-/* Logout Link */
-.main-sidebar .logout-link {
-  position: absolute;
-  width: 93px;
-  height: 22px;
-  left: 32px;
-  top: 598px;
+/* Content Section & Settings */
+.main-sidebar .content-section {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  height: 100%; /* Full height for sidebar */
 }
 
-.main-sidebar .logout-icon {
-  width: 17px;
-  height: 17px;
-  margin-right: 12px;
-  border: 2px solid #FFFFFF;
+.main-sidebar .settings {
+  margin-top: auto; /* Push settings to the bottom */
+  padding: 20px;
+  text-align: center;
+}
+
+/* Logout Button */
+.main-sidebar .logout {
+  padding: 15px;
+  text-align: center;
+  color: #fff;
+  cursor: pointer;
+  margin: 10px 15px;
+  border-radius: 8px;
+  transition: all 0.3s ease; /* Smooth hover transition */
+}
+
+.main-sidebar .logout:hover {
+  background: rgba(255, 255, 255, 0.2); /* Highlight effect on hover */
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
   .main-sidebar {
-    width: 200px;
+    width: 200px; /* Adjust sidebar width for smaller screens */
   }
-  
+
   .main-sidebar ul li a {
-    font-size: 16px;
-    padding: 10px 20px;
+    font-size: 14px; /* Smaller text for compact view */
+    padding: 10px; /* Adjust padding for smaller screens */
+  }
+
+  .main-sidebar .logout {
+    font-size: 14px; /* Reduced font size for logout button */
+  }
+
+  .main-sidebar .logo img {
+    width: 100px; /* Adjust logo size for smaller screens */
   }
 }
 
@@ -342,3 +291,4 @@
 .main-sidebar::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.3);
 }
+
