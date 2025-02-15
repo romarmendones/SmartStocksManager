@@ -1,6 +1,8 @@
 .dashboard-layout {
   min-height: 100vh;
   background: #f0f2f5;
+  display: flex;
+  justify-content: center;
 }
 
 .dashboard-content {
@@ -9,10 +11,11 @@
   padding: 24px;
   min-height: calc(100vh - 64px);
   transition: all 0.3s ease;
+  width: 100%;
+  max-width: 1200px;
 }
 
 .content-container {
-  max-width: 1200px;
   margin: 0 auto;
   display: grid;
   grid-template-rows: auto 1fr;
