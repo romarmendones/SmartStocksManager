@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../Back-end/supabaseClient';
 import Sidebar from '../components/Sidebar';
 import '../styles/ActivityLog.css';
+import '../styles/sidebar.css';
 
 const ActivityLog = () => {
   const [activities, setActivities] = useState([]);

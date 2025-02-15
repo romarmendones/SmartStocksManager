@@ -7,11 +7,16 @@
   .activity-content {
     flex: 1;
     padding: 32px;
-    margin-left: 250px;
+    margin-left: 270px; /* Increased margin to move content right */
+    display: flex; /* Added flex display */
+    flex-direction: column; /* Stack children vertically */
+    align-items: center; /* Center children horizontally */
   }
   
   .activity-header {
     margin-bottom: 24px;
+    text-align: center; /* Center header text */
+    width: 100%; /* Full width for proper centering */
   }
   
   .activity-header h1 {
@@ -24,6 +29,8 @@
     border-radius: 12px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     overflow: hidden;
+    width: 95%; /* Slightly less than full width for visual balance */
+    margin: 0 auto; /* Center the table container */
   }
   
   .activity-table {
