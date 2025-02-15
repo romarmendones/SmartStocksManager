@@ -6,8 +6,8 @@
 }
 
 .dashboard-content {
-  margin-left: 250px;
-  margin-right: 300px;
+  margin-left: 100px;
+  margin-right: 100px;
   padding: 24px;
   min-height: calc(100vh - 64px);
   transition: all 0.3s ease;
