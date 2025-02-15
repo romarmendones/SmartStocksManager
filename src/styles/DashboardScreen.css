@@ -3,143 +3,6 @@
   background: #f0f2f5;
 }
 
-/* Main Sidebar Styling */
-.main-sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 40;
-  width: 16rem;
-  height: 100vh;
-  background: linear-gradient(135deg, #FFA500, #000000); /* Enhanced gradient angle */
-  color: #111827;
-  transform: translate(-100);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Smoother transition */
-  box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1); /* Added shadow for depth */
-}
-
-/* Sidebar Logo */
-.main-sidebar .logo {
-  text-align: center;
-  padding: 25px 0;
-  margin-bottom: 30px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Added separator */
-}
-
-.main-sidebar .logo img {
-  width: 130px; /* Slightly larger logo */
-  height: auto;
-  transition: transform 0.3s ease;
-}
-
-.main-sidebar .logo img:hover {
-  transform: scale(1.05); /* Subtle zoom on hover */
-}
-
-/* Sidebar Navigation */
-.main-sidebar ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.main-sidebar ul li {
-  margin: 8px 15px;
-  position: relative; /* For hover effects */
-}
-
-.main-sidebar ul li a {
-  display: flex;
-  align-items: center;
-  padding: 14px 18px;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 10px;
-  font-size: 16px;
-  font-weight: 500; /* Added font weight */
-  gap: 12px;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden; /* For hover animation */
-}
-
-.main-sidebar ul li a:before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 0;
-  background: rgba(255, 255, 255, 0.1);
-  transition: width 0.3s ease;
-}
-
-.main-sidebar ul li a:hover:before {
-  width: 100%;
-}
-
-.main-sidebar ul li a:hover,
-.main-sidebar ul li a.active {
-  background: rgba(255, 255, 255, 0.15);
-  transform: translateX(5px);
-  letter-spacing: 0.5px; /* Subtle text spacing on hover */
-}
-
-/* Content Section & Settings */
-.main-sidebar .content-section {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  position: relative; /* For shadow effects */
-}
-
-.main-sidebar .settings {
-  margin-top: auto;
-  padding: 25px;
-  text-align: center;
-  border-top: 1px solid rgba(255, 255, 255, 0.1); /* Added separator */
-}
-
-/* Logout Button */
-.main-sidebar .logout {
-  padding: 15px;
-  text-align: center;
-  color: #fff;
-  cursor: pointer;
-  margin: 15px;
-  border-radius: 10px;
-  transition: all 0.3s ease;
-  background: rgba(255, 165, 0, 0.2); /* Subtle background */
-  backdrop-filter: blur(5px); /* Frosted glass effect */
-}
-
-.main-sidebar .logout:hover {
-  background: rgba(255, 165, 0, 0.3);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .main-sidebar {
-    width: 220px; /* Slightly wider for better touch targets */
-  }
-
-  .main-sidebar ul li a {
-    font-size: 15px;
-    padding: 12px 15px;
-  }
-
-  .main-sidebar .logout {
-    font-size: 15px;
-    padding: 12px;
-  }
-
-  .main-sidebar .logo img {
-    width: 110px;
-  }
-}
-
 .dashboard-content {
   margin-left: 250px;
   margin-right: 300px;
@@ -278,15 +141,6 @@
     padding: 16px;
   }
   
-  .main-sidebar {
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
-  }
-  
-  .main-sidebar.active {
-    transform: translateX(0);
-  }
-  
   .content-container {
     gap: 16px;
   }
@@ -304,23 +158,19 @@
 }
 
 /* Custom Scrollbar */
-.notification-sider::-webkit-scrollbar,
-.main-sidebar::-webkit-scrollbar {
+.notification-sider::-webkit-scrollbar {
   width: 6px;
 }
 
-.notification-sider::-webkit-scrollbar-track,
-.main-sidebar::-webkit-scrollbar-track {
+.notification-sider::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.notification-sider::-webkit-scrollbar-thumb,
-.main-sidebar::-webkit-scrollbar-thumb {
+.notification-sider::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.2);
   border-radius: 3px;
 }
 
-.notification-sider::-webkit-scrollbar-thumb:hover,
-.main-sidebar::-webkit-scrollbar-thumb:hover {
+.notification-sider::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.3);
 }

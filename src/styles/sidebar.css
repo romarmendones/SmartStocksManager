@@ -1,24 +1,46 @@
 .sidebar {
-  width: 250px;
+  width: 16rem;
   height: 100vh;
-  background-color: #f8f9fa;
+  background: linear-gradient(135deg, #FFA500, #000000);
   position: fixed;
   left: 0;
   top: 0;
-  padding: 20px;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15); 
   overflow-y: auto;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1000;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
 }
 
 .sidebar-header {
-  margin-bottom: 30px;
+  margin-bottom: 2rem;
   text-align: center;
+  padding: 1.25rem 0;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.15);
 }
 
 .sidebar-header h2 {
-  color: #333;
-  font-size: 1.5rem;
-  margin-bottom: 10px;
+  color: #fff;
+  font-size: 1.75rem;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .sidebar-nav {
@@ -28,50 +50,86 @@
 }
 
 .sidebar-nav-item {
-  margin-bottom: 10px;
+  margin: 0.75rem 0;
+  position: relative;
 }
 
 .sidebar-nav-link {
-  display: block;
-  padding: 12px 15px;
-  color: #495057;
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  color: rgba(255, 255, 255, 0.9);
   text-decoration: none;
-  border-radius: 5px;
+  border-radius: 0.75rem;
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  font-weight: 500;
+}
+
+.sidebar-nav-link:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0;
+  background: rgba(255, 255, 255, 0.15);
+  transition: width 0.3s ease;
+  border-radius: 0.75rem;
+}
+
+.sidebar-nav-link:hover:before {
+  width: 100%;
 }
 
 .sidebar-nav-link:hover {
-  background-color: #e9ecef;
-  color: #212529;
+  transform: translateX(8px);
+  letter-spacing: 0.6px;
+  color: #fff;
 }
 
 .sidebar-nav-link.active {
-  background-color: #007bff;
-  color: white;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .sidebar-footer {
-  margin-top: 30px;
-  padding-top: 20px;
-  border-top: 1px solid #dee2e6;
+  margin-top: auto;
+  padding-top: 1.5rem;
+  border-top: 2px solid rgba(255, 255, 255, 0.15);
   text-align: center;
 }
 
 .sidebar-toggle {
   display: none;
   position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 1000;
-  background: none;
+  top: 1.25rem;
+  left: 1.25rem;
+  z-index: 1001;
+  background: rgba(255, 165, 0, 0.25);
   border: none;
   cursor: pointer;
+  padding: 0.875rem;
+  border-radius: 0.75rem;
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.sidebar-toggle:hover {
+  background: rgba(255, 165, 0, 0.35);
+  transform: scale(1.05);
 }
 
 @media (max-width: 768px) {
   .sidebar {
     transform: translateX(-100%);
     transition: transform 0.3s ease-in-out;
+    width: 250px;
+    box-shadow: 4px 0 25px rgba(0, 0, 0, 0.2);
   }
 
   .sidebar.show {
@@ -86,16 +144,32 @@
 .sidebar-user-profile {
   display: flex;
   align-items: center;
-  padding: 15px;
-  margin-bottom: 20px;
-  border-bottom: 1px solid #dee2e6;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 0.75rem;
+}
+
+.sidebar-user-profile:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
 }
 
 .sidebar-user-avatar {
-  width: 40px;
-  height: 40px;
+  width: 3.5rem;
+  height: 3.5rem;
   border-radius: 50%;
-  margin-right: 10px;
+  margin-right: 1.25rem;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.sidebar-user-avatar:hover {
+  transform: scale(1.08);
+  border-color: rgba(255, 255, 255, 0.5);
 }
 
 .sidebar-user-info {
@@ -103,13 +177,17 @@
 }
 
 .sidebar-user-name {
-  font-weight: bold;
-  color: #333;
+  font-weight: 600;
+  color: #fff;
   margin: 0;
+  font-size: 1.2rem;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .sidebar-user-role {
-  font-size: 0.8rem;
-  color: #6c757d;
-  margin: 0;
+  font-size: 0.925rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0.35rem 0 0;
+  font-weight: 500;
 }

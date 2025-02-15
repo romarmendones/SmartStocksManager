@@ -4,6 +4,7 @@ import { FaBox, FaCog, FaSignOutAlt } from 'react-icons/fa'; // Kept existing ic
 import DashboardIcon from '@mui/icons-material/Dashboard'; // Import Dashboard icon from Material UI
 import '../styles/DashboardScreen.css';
 import LOGO from '../assets/LOGO.png';
+import '../styles/sidebar.css';
 
 const Sidebar = () => {
   const [showLogoutModal, setShowLogoutModal] = useState(false);
