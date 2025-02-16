@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { FaBox, FaCog, FaSignOutAlt } from 'react-icons/fa'; // Kept existing icons for other items
-import DashboardIcon from '@mui/icons-material/Dashboard'; // Import Dashboard icon from Material UI
+import { FaSignOutAlt, FaCog } from 'react-icons/fa';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import InventoryIcon from '@mui/icons-material/Inventory';
+import ReceiptIcon from '@mui/icons-material/Receipt';
+import HistoryIcon from '@mui/icons-material/History';
+import BusinessIcon from '@mui/icons-material/Business';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import '../styles/DashboardScreen.css';
 import LOGO from '../assets/LOGO.png';
 import '../styles/sidebar.css';
@@ -31,36 +38,36 @@ const Sidebar = () => {
       </div>
       <nav className="menu">
         <NavLink to="/dashboard" className="menu-item" activeClassName="active">
-          <DashboardIcon className="menu-icon" /> {/* Updated to Material UI Dashboard icon */}
+          <DashboardIcon className="menu-icon" />
           <span>Dashboard</span>
         </NavLink>
         <NavLink to="/sales" className="menu-item" activeClassName="active">
-          <FaBox className="menu-icon" />
+          <ReceiptIcon className="menu-icon" />
           <span>Sales</span>
         </NavLink>
         
         <NavLink to="/inventory" className="menu-item" activeClassName="active">
-          <FaBox className="menu-icon" />
+          <InventoryIcon className="menu-icon" />
           <span>Inventory</span>
         </NavLink>
         <NavLink to="/activity" className="menu-item" activeClassName="active">
-          <FaBox className="menu-icon" />
+          <HistoryIcon className="menu-icon" />
           <span>Activity Log</span>
         </NavLink>
         <NavLink to="/branch" className="menu-item" activeClassName="active">
-          <FaBox className="menu-icon" />
+          <BusinessIcon className="menu-icon" />
           <span>Branch</span>
         </NavLink>
         <NavLink to="/order" className="menu-item" activeClassName="active">
-          <FaBox className="menu-icon" />
+          <ShoppingCartIcon className="menu-icon" />
           <span>Orders </span>
         </NavLink>
         <NavLink to="/signup" className="menu-item" activeClassName="active">
-          <FaBox className="menu-icon" />
+          <PersonAddIcon className="menu-icon" />
           <span>Staff Registration</span>
         </NavLink>
         <NavLink to="/super" className="menu-item" activeClassName="active">
-          <FaBox className="menu-icon" />
+          <SupervisorAccountIcon className="menu-icon" />
           <span>Branch Admins</span>
         </NavLink>
         <NavLink to="/settings" className="menu-item" activeClassName="active">
