@@ -8,7 +8,8 @@ import TotalSalesCard from '../components/TotalSalesCard';
 import NotificationPanel from '../components/NotificationPanel';
 import OverallSalesGraph from '../components/OverallSalesGraph';
 import '../styles/DashboardScreen.css';
-import '../styles/sidebar.css';
+
+
 
 const { Content, Sider } = Layout;
 

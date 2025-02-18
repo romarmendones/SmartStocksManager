@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { supabase } from '../Back-end/supabaseClient';
 import Sidebar from '../components/Sidebar';
 import '../styles/SettingsScreen.css';
-import '../styles/sidebar.css';
 
 const SettingsScreen = () => {
     const navigate = useNavigate();
