@@ -2,65 +2,123 @@
     display: flex;
     height: 100vh;
     background-color: #f8fafc;
-  }
+}
   
-  .activity-content {
+.activity-content {
     flex: 1;
     padding: 32px;
-    margin-left: 250px;
-  }
+    margin-left: 270px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: margin-left 0.3s ease;
+}
+
+.activity-content.sidebar-collapsed {
+    margin-left: 80px;
+}
   
-  .activity-header {
+.activity-header {
     margin-bottom: 24px;
-  }
+    text-align: center;
+    width: 100%;
+}
   
-  .activity-header h1 {
+.activity-header h1 {
     color: #1e293b;
     font-size: 24px;
-  }
+    font-weight: 600;
+    margin: 0;
+    padding: 16px 0;
+}
   
-  .activity-table-container {
+.activity-table-container {
     background: white;
     border-radius: 12px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-  }
+    width: 95%;
+    margin: 0 auto;
+    transition: all 0.3s ease;
+}
+
+.activity-table-container:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
   
-  .activity-table {
+.activity-table {
     width: 100%;
     border-collapse: collapse;
-  }
+}
   
-  .activity-table th,
-  .activity-table td {
+.activity-table th,
+.activity-table td {
     padding: 16px;
     text-align: left;
     border-bottom: 1px solid #e2e8f0;
-  }
+}
   
-  .activity-table th {
-    background: #f8fafc;
+.activity-table th {
+    background: #f1f5f9;
     font-weight: 600;
-    color: #64748b;
-  }
+    color: #475569;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+}
   
-  .activity-table td {
+.activity-table td {
     color: #334155;
-  }
+    font-size: 0.95rem;
+}
   
-  .activity-table tbody tr:hover {
+.activity-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.activity-table tbody tr:hover {
     background-color: #f1f5f9;
-  }
+    cursor: pointer;
+}
   
-  .loading,
-  .error {
+.loading,
+.error {
     text-align: center;
     padding: 24px;
     color: #64748b;
-  }
+    font-size: 1rem;
+}
   
-  .error {
+.error {
     color: #ef4444;
     background: #fee2e2;
     border-radius: 8px;
-  }
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+@media screen and (max-width: 1024px) {
+    .activity-content {
+        margin-left: 80px;
+        padding: 24px;
+    }
+    
+    .activity-table-container {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .activity-content {
+        margin-left: 0;
+        padding: 16px;
+    }
+    
+    .activity-table th,
+    .activity-table td {
+        padding: 12px;
+        font-size: 0.875rem;
+    }
+}

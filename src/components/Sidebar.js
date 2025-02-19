@@ -1,72 +1,89 @@
-import React, { useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { FaBox, FaCog, FaSignOutAlt } from 'react-icons/fa'; // Kept existing icons for other items
-import DashboardIcon from '@mui/icons-material/Dashboard'; // Import Dashboard icon from Material UI
+import React, { useState, useEffect } from 'react';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
+import { 
+  FaBox, 
+  FaCog, 
+  FaSignOutAlt,
+  FaUserPlus,
+  FaUsers,
+  FaClipboardList,
+  FaStore,
+  FaHistory,
+  FaShoppingCart
+} from 'react-icons/fa';
+import DashboardIcon from '@mui/icons-material/Dashboard';
 import '../styles/DashboardScreen.css';
 import LOGO from '../assets/LOGO.png';
 
 const Sidebar = () => {
   const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [isOpen, setIsOpen] = useState(true);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleLogoutClick = (e) => {
     e.preventDefault();
-    setShowLogoutModal(true); // Show the confirmation modal
+    setShowLogoutModal(true);
   };
 
   const confirmLogout = () => {
+    localStorage.removeItem('userToken'); // Clear user session
     setShowLogoutModal(false);
-    navigate('/'); // Navigate to the login page
+    navigate('/');
   };
 
   const cancelLogout = () => {
-    setShowLogoutModal(false); // Close the modal without logging out
+    setShowLogoutModal(false);
   };
 
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const menuItems = [
+    { path: '/dashboard', icon: <DashboardIcon className="menu-icon" />, label: 'Dashboard' },
+    { path: '/sales', icon: <FaShoppingCart className="menu-icon" />, label: 'Sales' },
+    { path: '/inventory', icon: <FaBox className="menu-icon" />, label: 'Inventory' },
+    { path: '/activity', icon: <FaHistory className="menu-icon" />, label: 'Activity Log' },
+    { path: '/branch', icon: <FaStore className="menu-icon" />, label: 'Branch' },
+    { path: '/order', icon: <FaClipboardList className="menu-icon" />, label: 'Orders' },
+    { path: '/signup', icon: <FaUserPlus className="menu-icon" />, label: 'Staff Registration' },
+    { path: '/super', icon: <FaUsers className="menu-icon" />, label: 'Branch Admins' },
+    { path: '/settings', icon: <FaCog className="menu-icon" />, label: 'Settings' }
+  ];
+
   return (
-    <div className="sidebar">
+    <div className={`sidebar ${isMobile ? (isOpen ? 'active' : '') : ''}`}>
       <div className="logo-container">
         <img src={LOGO} alt="SmartStocks Logo" className="logo-image" />
+        {isMobile && (
+          <button className="toggle-button" onClick={toggleSidebar}>
+            ☰
+          </button>
+        )}
       </div>
       <nav className="menu">
-        <NavLink to="/dashboard" className="menu-item" activeClassName="active">
-          <DashboardIcon className="menu-icon" /> {/* Updated to Material UI Dashboard icon */}
-          <span>Dashboard</span>
-        </NavLink>
-        <NavLink to="/sales" className="menu-item" activeClassName="active">
-          <FaBox className="menu-icon" />
-          <span>Sales</span>
-        </NavLink>
-        
-        <NavLink to="/inventory" className="menu-item" activeClassName="active">
-          <FaBox className="menu-icon" />
-          <span>Inventory</span>
-        </NavLink>
-        <NavLink to="/activity" className="menu-item" activeClassName="active">
-          <FaBox className="menu-icon" />
-          <span>Activity Log</span>
-        </NavLink>
-        <NavLink to="/branch" className="menu-item" activeClassName="active">
-          <FaBox className="menu-icon" />
-          <span>Branch</span>
-        </NavLink>
-        <NavLink to="/order" className="menu-item" activeClassName="active">
-          <FaBox className="menu-icon" />
-          <span>Orders </span>
-        </NavLink>
-        <NavLink to="/signup" className="menu-item" activeClassName="active">
-          <FaBox className="menu-icon" />
-          <span>Staff Registration</span>
-        </NavLink>
-        <NavLink to="/super" className="menu-item" activeClassName="active">
-          <FaBox className="menu-icon" />
-          <span>Branch Admins</span>
-        </NavLink>
-        <NavLink to="/settings" className="menu-item" activeClassName="active">
-          <FaCog className="menu-icon" />
-          <span>Settings</span>
-        </NavLink>
-        <a href="/" onClick={handleLogoutClick} className="menu-item">
+        {menuItems.map((item) => (
+          <NavLink
+            key={item.path}
+            to={item.path}
+            className={`menu-item ${location.pathname === item.path ? 'active' : ''}`}
+          >
+            {item.icon}
+            <span>{item.label}</span>
+          </NavLink>
+        ))}
+        <a href="/" onClick={handleLogoutClick} className="menu-item logout">
           <FaSignOutAlt className="menu-icon" />
           <span>Log Out</span>
         </a>
